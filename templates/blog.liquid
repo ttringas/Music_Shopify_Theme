@@ -1,0 +1,29 @@
+{% paginate blogs.music-blog.articles by 3 %}
+
+{% for article in blogs.music-blog.articles  %}
+
+<div class="content-04">
+  <p class="text"><a href="{{ article.url }}">{{ article.title }}</a><br/>{{ article.created_at | date: "%b %d" }}</p>
+  <p class="text01">
+    {{ article.content | truncate: 250 }}
+  </p>
+</div>                         
+<div class="item02"></div>
+
+{% endfor %}
+
+{% if paginate.pages > 1 %}
+<div class="next">
+  {% if paginate.previous %}
+  <div class="next_tab"><a href="{{paginate.previous.url}}"><img src="{{ 'back.gif' | asset_url }}" width="11" height="13" border="0" /></a>&nbsp;PREV</div>
+  {% endif %}
+  {% if (paginate.previous && paginate.next) %}
+  <div class="line"></div>
+  {% endif %}
+  {% if paginate.next %}
+  <div class="prev_tab">&nbsp;NEXT<a href="{{paginate.next.url}}"><img src="{{ 'next.gif' | asset_url }}" height="13" border="0" /></a></div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endpaginate %}

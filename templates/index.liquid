@@ -1,0 +1,45 @@
+{% paginate collections.frontpage.products by 9 %}
+
+<table class="products_table">
+
+{% tablerow product in collections.frontpage.products cols:3 %} 
+  {% unless tablerowloop.col_last %}
+    <div class="firsts_col">
+      <div class="product_image">
+        <a href="{{ product.url | within: collection }}" title="{{ product.title }}">
+          <img src="{{ product.featured_image | product_img_url  }}" height="188" width="188"/>
+        </a>
+      </div>
+      <div class="product_name"><a href="{{ product.url | within: collection }}" title="{{ product.title }}">{{product.title}}</a></div>
+      <div class="product_price"><a href="{{ product.url | within: collection }}" title="{{ product.price_min | money }}">{{product.price_min | money}}</a></div>      
+    </div>
+  {% else %}
+    <div class="last_col">
+      <div class="product_image">
+        <a href="{{ product.url | within: collection }}" title="{{ product.title }}">
+          <img src="{{ product.featured_image | product_img_url  }}" height="188" width="188"/>
+        </a>
+      </div>
+      <div class="product_name"><a href="{{ product.url | within: collection }}" title="{{ product.title }}">{{product.title}}</a></div>
+      <div class="product_price"><a href="{{ product.url | within: collection }}" title="{{ product.price_min | money }}">{{product.price_min | money}}</a></div>      
+    </div>
+  {% endunless %}
+{% endtablerow %}
+
+</table>
+
+{% if paginate.pages > 1 %}
+<div class="next">
+  {% if paginate.previous %}
+  <div class="next_tab"><a href="{{paginate.previous.url}}"><img src="{{ 'back.gif' | asset_url }}" width="11" height="13" border="0" /></a>&nbsp;PREV</div>
+  {% endif %}
+  {% if (paginate.previous && paginate.next) %}
+  <div class="line"></div>
+  {% endif %}
+  {% if paginate.next %}
+  <div class="prev_tab">&nbsp;NEXT<a href="{{paginate.next.url}}"><img src="{{ 'next.gif' | asset_url }}" height="13" border="0" /></a></div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endpaginate %}

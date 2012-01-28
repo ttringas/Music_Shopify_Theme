@@ -1,0 +1,79 @@
+<script type="text/javascript">
+  function remove_item(id) {
+      document.getElementById('updates_'+id).value = 0;
+      document.getElementById('cart').submit();
+  }
+</script>
+
+
+{% if cart.item_count == 0 %} 
+	<h1>Your cart is currently empty.</h1>
+{% else %}
+
+
+
+<form action="/cart" method="post" id="cart">
+
+  <div class="content-030">
+    <table width="477" border="0" >
+      <tr>
+        <td width="141" height="37"><strong>Product</strong></td>
+        <td width="80"><strong>Quantity </strong></td>
+        <td width="87"><strong>Item Price </strong></td>
+        <td width="78"><strong>Total </strong></td>
+        <td width="69" align="right"><strong>Remove</strong></td>
+      </tr>
+      <tr>
+        <td colspan="5"><div class="line07"></div></td>
+      </tr>
+      
+      {% for item in cart.items %}
+
+        <tr>
+          <td height="28">{{ item.title }}</td>
+          <td align="left"><input type="text" class="quantity item-count" name="updates[{{item.variant.id}}]" id="updates_{{item.variant.id}}" size="3" style="text-align: right" value="{{item.quantity}}" onfocus="this.select();"/></td>
+          <td>{{ item.price | money }}</td>
+          <td>{{ item.line_price | money }}</td>
+          <td align="right"><a href="#" onclick="remove_item({{item.variant.id}}); return false;">Remove</a></td>
+        </tr>
+
+      {% endfor %}
+
+      <tr>
+        <td colspan="5"><div class="line07"></div></td>
+      </tr>
+      <tr>
+        <td height="22" colspan="2"><input type="submit" name="update" value="Update" id="update-cart" /></td>
+        <td>&nbsp;</td>
+        <td colspan="2" align="right"><strong>Sub Total {{cart.total_price | money_with_currency }}</strong></td>
+      </tr>
+      <tr>
+        <td colspan="5"><div class="line07"></div></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="content-0310">
+    <div class="item0201"><input type="image" src="{{ 'checkout.jpg' | asset_url }}" name="checkout" value="Checkout" title="Checkout"></div>
+      <p class="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/collections/all">KEEP SHOPPING</a></p>
+      <p class="text">&nbsp;<br/>&nbsp;<br/></p>
+      <p class="text">Your Shopping Cart</p><br/>
+      <p class="text01">Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in.Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in.
+      </p><br/>
+  
+      <p class="text">Your Shopping Cart</p><br/>
+      <p class="text01">
+  Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in.Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in.
+      </p><br/>
+  
+      <p class="text">Your Shopping Cart</p><br/>
+      <p class="text01">
+  Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in.Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in. Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in.
+      </p><br/>
+    </div>
+  </div>
+
+
+</form>
+
+{% endif %}

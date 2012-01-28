@@ -1,0 +1,75 @@
+<div class="content-003070" id="main_image"><img src="{{ product.featured_image | product_img_url }}" alt="{{product.title | escape }}" /></div>
+<div class="content-0030710">
+<table class="product_images_table">
+{% tablerow image in product.images cols:2 %} 
+  <a href="#" onclick="$('main_image').src = '{{image | product_img_url}}'; return(false);">
+    <img src="{{image | product_img_url: 'small'}}" border="0"/>
+  </a>
+{% endtablerow %}
+</table>
+</div>
+
+<form action="/cart/add" method="post">
+
+  <div class="select_form">
+    <select id="variant-select" name="id" class="product-info-options">
+      {% for variant in product.variants %}
+        {% if variant.available %}
+          <option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+        {% else %}
+          <option value="{{ variant.id }}" disabled="disabled">{{ variant.title }} - SOLD OUT</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+
+  <div id="price-field" class="price"></div>
+
+  <div class="shop_buttons">
+    <input type="image" src="{{ 'add_to_cart.jpg' | asset_url }}" id="add" />
+    <a href="/collections/all"><image src="{{ 'keep_shooping.jpg' | asset_url }}" border="0"/></a>
+  </div>
+
+</form>
+
+
+
+
+<div class="content-0030701">
+  <table width="377" height="381" border="0">
+    <tr>
+      <td width="274" valign="top" align="left"><p><strong>{{ product.title }}: {{ product.price_min | money }}{% if product.price_varies %} - {{ product.price_max | money }}{% endif %}</strong></p>
+        <p>&nbsp;</p>
+        {{ product.description }}
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+
+<script type="text/javascript">
+<!--
+  // prototype callback for multi variants dropdown selector
+  var selectCallback = function(variant, selector) {
+    if (variant && variant.available == true) {
+      // selected a valid variant
+      $('add').removeClassName('disabled'); // remove unavailable class from add-to-cart button
+      $('add').disabled = false;           // reenable add-to-cart button
+      $('price-field').innerHTML = Shopify.formatMoney(variant.price, "{{shop.money_with_currency_format}}");  // update price field
+    } else {
+      // variant doesn't exist
+      $('add').addClassName('disabled');      // set add-to-cart button to unavailable class
+      $('add').disabled = true;              // disable add-to-cart button      
+      $('price-field').innerHTML = (variant) ? "Sold Out" : "Unavailable"; // update price-field message
+    }
+  };
+
+  // initialize multi selector for product
+  Event.observe(document, 'dom:loaded', function() {
+    new Shopify.OptionSelectors("variant-select", { product: {{ product | json }}, onVariantSelected: selectCallback }); 
+  });
+-->
+</script>
+
+		

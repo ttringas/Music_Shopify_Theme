@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>{{shop.name}} - {{page_title}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  
+    {{ 'style.css'     | asset_url | stylesheet_tag }}
+    
+    {{ 'prototype/1.6/prototype.js'           | global_asset_url  | script_tag }}
+    {{ 'scriptaculous/1.8.2/scriptaculous.js' | global_asset_url  | script_tag }}
+    {{ 'option_selection.js'                  | asset_url | script_tag }}
+    
+    {{ content_for_header }}
+  </head>
+  <body id="page-{{template}}">
+	
+    <div class="wrapper" align="center">
+      <div class="wrapper" align="center">
+        <div class="inner">
+          <div class="main">
+	
+            <div class="header">
+              <span><a href="/">MUSIC THEME</a></span>
+            </div>
+
+            <div class="menubar_imges">
+              <div class="menubar">
+                <ul>
+                  <li><a href="{{ collections.albums.url }}" title="ALBUMS"><span>ALBUMS</span></a></li>
+                  <li><a href="{{ pages.band-members.url }}" title="BAND MEMBERS"><span>BAND MEMEBERS</span></a></li> 
+                  <li><a href="/collections/all" title="STORE"><span>STORE</span></a></li>
+                  <li><a href="{{ blogs.music-blog.url }}" title="BLOG"><span>BLOG</span></a></li>
+                  <li><a href="{{ pages.contact.url }}" title="CONTACT"><span>CONTACT</span></a></li>
+                  <li><a href="/cart" title="CART"><span>CART {% if cart.item_count > 0 %} ({{cart.item_count}}) {% endif %}</span></a> </li>
+                </ul>
+              </div>
+
+              <div class="search_box">
+                <form method="get" action="/search">
+                  <input id="search-input" class="text" type="text" name="q" />
+                  <input class="submit" name="submit" value="" type="submit" />
+                </form>
+              </div>
+            </div>
+
+            <div class="main_content">
+	
+              <div class="left_side">
+                <div class="product"></div>
+                <div class="leftmenu">
+                  <ul>
+	                {% for collection in collections %}
+	                  {% if collection.title != 'Frontpage' && collection.title != 'Songs' && collection.title != 'All products' %}
+                        <li><a href="{{collection.url}}" title="{{collection.title}}">{{collection.title}}</a></li>
+	                  {% endif %}
+	                {% endfor %}
+                  </ul>
+                </div>
+                <div class="song"></div>
+
+                {% if collections.songs.products.size > 0 %}
+                <div class="leftmenu">
+                  <ul>
+	                {% for product in collections.songs.products %}
+                      <li><a href="{{product.url | within: collection}}" title="{{product.title}}">{{product.title}}</a></li>
+	                {% endfor %}
+                  </ul>
+                </div>
+                {% endif %}
+              </div><!-- left side -->
+
+              <div class="middle_side">
+                {{content_for_layout}}
+              </div>
+
+              <div class="right_side">
+	            <div class="blog"></div>
+	            <div class="blog_text">
+		          <p class="b_text">Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in.</p>
+                </div>
+                <div class="download"></div>
+                <div class="signup"></div>
+                <div class="blog_text">
+                  <p class="b_text">Lorem ipsum dolor sit amet, sit dolor conse ctetur adipisicing elit, sed do eius mod tempor incisjhd didunt ut lab ore et dolore magna aliqua ut in.</p>
+                </div>
+              </div><!-- right side -->
+
+            </div><!-- main content -->
+
+            <div class="clear_both">&nbsp;</div>
+
+            <div class="footer">
+              <p class="footer_text">Copyright 2010 CoolShopifyThemes, LLC  |  Contact Us</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
